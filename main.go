@@ -65,13 +65,13 @@ func main() {
 
 
 
-	err3 := AddNewClient(db, user)
+	err3 := AddUser(db, user)
 	if err3 != nil {
 		fmt.Println(err3)
 	}
 	fmt.Println(user)
 
-	err4 := AddNewAcount(db, acc)
+	err4 := AddAcc(db, acc)
 	if err4 != nil {
 		fmt.Println(err4)
 	}
@@ -90,7 +90,7 @@ func main() {
 	fmt.Println("Sorry nothing update")
 }
 
-func AddNewClient(db *sql.DB, client users.Users) (err3 error) {
+func AddUser(db *sql.DB, client users.Users) (err3 error) {
 
 	_, err3 = db.Exec("Insert Into Users(FirstName, LastName, Age, Gender, Login, Password) values (($1), ($2), ($3), ($4), ($5), ($6))", client.FirstName, client.LastName, client.Age, client.Gender, client.Login, client.Password)
 	if err3 != nil {
@@ -99,12 +99,20 @@ func AddNewClient(db *sql.DB, client users.Users) (err3 error) {
 	return err3
 }
 
-func AddNewAcount(db *sql.DB, acount accounts.Accounts) (err4 error)  {
+func AddAcc(db *sql.DB, acount accounts.Accounts) (err4 error)  {
 	_, err4 = db.Exec("Insert Into Accounts(UsersId, Numb, Amount, Currency) values (($1), ($2), ($3), ($4))", acount.UserId, acount.Numb, acount.Amount, acount.Currency)
 	if err4 != nil {
 		fmt.Println(err4)
 	}
 	return err4
+}
+
+func Update(db *sql.DB) (err6 error) {
+	_, err6 = db.Exec("Update Account Set Amount = Amount + 332050 ")
+	if err6 != nil {
+		fmt.Println(err6)
+	}
+	return err6
 }
 
 func RemoveById(db *sql.DB) (err5 error)  {
@@ -115,11 +123,5 @@ func RemoveById(db *sql.DB) (err5 error)  {
 	return err5
 }
 
-func Update(db *sql.DB) (err6 error) {
-	_, err6 = db.Exec("Update Account Set Amount = Amount + 33000 ")
-	if err6 != nil {
-		fmt.Println(err6)
-	}
-	return err6
-}
+
 
